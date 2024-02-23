@@ -7,7 +7,7 @@
                 <div class="card-header">{{ __('Tambah Penerbangan') }}</div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <form enctype="multipart/form-data" action="#" method="post">
+                        <form enctype="multipart/form-data" action="{{ route('penerbangan.store') }}" method="post">
                             @csrf
                             @method('POST')
                             <table class="table table-bordered">

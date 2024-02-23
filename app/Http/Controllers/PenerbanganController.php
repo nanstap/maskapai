@@ -32,7 +32,32 @@ class PenerbanganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validasi input validator
+        $this->validate($request,[
+            'name ' => 'required',
+            'price' => 'required',
+            'image' => 'required',
+            'description' => 'required',
+
+        ]);
+        //store image
+        $imagePath = $request->file('image')->store('public/images');
+
+        //request all store
+        $penerbangan = Penerbangan::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'image' => $imagePath,
+            'description' => $request->description,
+        ]);
+
+        // dd($penerbangan);
+        if ($penerbangan) {
+            return redirect()->route('penerbangan.index')->with('success', 'Penerbangan created successfully');
+        } else{
+            return redirect()->route('penerbangan.index')->with('error', 'Penerbangan created failed');
+        }
+
     }
 
     /**

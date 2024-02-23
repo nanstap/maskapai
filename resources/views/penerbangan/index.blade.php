@@ -25,8 +25,10 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->name }}</td>
-                                            <td><img src="#" alt="" width="100px"></td>
-                                            <td></td>
+                                            <td><img src="{{ Storage::url($item->image) }}" alt="" width="100px"></td>
+                                            <td>
+                                                <a href="" class="btn btn-danger">Hapus</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
