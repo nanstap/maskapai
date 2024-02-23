@@ -4,6 +4,10 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+                {{-- show message succes --}}
+                @if (session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
                 <div class="card">
 
                     <div class="card-header">
@@ -25,9 +29,13 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->name }}</td>
-                                            <td><img src="{{ Storage::url($item->image) }}" alt="" width="100px"></td>
+                                            <td><img src="{{ Storage::url($item->image) }}" alt="" width="100px">
+                                            </td>
                                             <td>
-                                                <a href="" class="btn btn-danger">Hapus</a>
+                                                <a href="{{ route('penerbangan.edit', $item->id) }}"
+                                                    class="btn btn-outline-success">Edit</a>
+                                                <a href="{{ route('penerbangan.destroy', $item->id) }}"
+                                                    class="btn btn-danger">Hapus</a>
                                             </td>
                                         </tr>
                                     @endforeach

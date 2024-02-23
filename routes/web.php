@@ -32,3 +32,13 @@ Route::get('penerbangan/create',
 //rute penerbangan store
 Route::post('penerbangan',
     [App\Http\Controllers\PenerbanganController::class, 'store'])->name('penerbangan.store');
+
+//rute penerbangan edit 
+Route::get('penerbangan/{id}/edit',
+    [App\Http\Controllers\PenerbanganController::class, 'edit'])->name('penerbangan.edit');
+//rute penerbangan update
+Route::put('penerbangan/{id}',
+    [App\Http\Controllers\PenerbanganController::class, 'update'])->name('penerbangan.update');
+//rute penerbangan delete
+Route::get('penerbangan/{id}',
+    [App\Http\Controllers\PenerbanganController::class, 'destroy'])->name('penerbangan.destroy');
