@@ -93,12 +93,20 @@ class PenerbanganController extends Controller
             'price' => 'required',
             'description' => 'required',
         ]);
+        // jika image tidak diubah
+        if (!$request->file('image')) {
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+        }
         //cek jika ada file image
         if ($request->file('image')) {
             //store image
             $imagePath = $request->file('image')->store('public/images');
         } else {
             $imagePath = $request->image;
+            // IMAGE TIDAK DI UBAH
+            
         }
         //delete image yang lama
         if ($request->image) {
