@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaksi;
 use App\Models\Penerbangan;
 use Illuminate\Http\Request;
+use Auth;
 
 class TransaksiController extends Controller
 {
@@ -25,6 +26,10 @@ class TransaksiController extends Controller
     public function create()
     {
         //
+        //passing data transaksi ke views
+        $penerbangan = Penerbangan::all(); //select * from penerbangan
+        $transaksi = Transaksi::all(); //select * from transaksi
+        return view('trxuser.create', compact('transaksi', 'penerbangan'));
     }
 
     /**
@@ -32,7 +37,40 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validasi  
+        $request->validate([
+            'penerbangan_id' => 'required',
+            'qty' => 'required',
+           
+        ]);
+       
+        // $input = $request->all();
+        //menetapkan harga jika qty lebih dari 1
+        $penerbangan = Penerbangan::find($request->penerbangan_id);
+        
+        $total = $penerbangan->price * $request->qty;
+        //menyimpan data ke dalam tabel transaksi
+        // $trx = Transaksi::create([
+        //     'penerbangan_id' => $request->penerbangan_id,
+        //     'user_id' => Auth::user()->id,
+        //     'status' => 'unpaid',
+        //     'qty' => $request->qty,
+        //     'adm_conf' => 'Process',
+        //     'total' => $total,
+        // ]);
+        $trx = new Transaksi(); 
+        $trx->penerbangan_id = $request->penerbangan_id;
+        $trx->user_id = 1; 
+        $trx->qty = $request->qty; 
+        $trx->status = 'unpaid'; 
+        $trx->adm_conf = 'Process'; 
+        $trx->total = $total;
+        $trx->save(); 
+        
+        $transaksi = Trasaksi::all();
+        // dd($trx);
+        return view('trxuser.create',compact('transaksi', 'total'));
+
     }
 
     /**

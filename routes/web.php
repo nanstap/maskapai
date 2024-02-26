@@ -45,4 +45,4 @@ Route::get('transaksi',
     [App\Http\Controllers\TransaksiController::class, 'index'])->name('transaksi.index');
 Route::get('transaksi/create',
     [App\Http\Controllers\TransaksiController::class, 'create'])->name('transaksi.create');
-Route::post('transaksi',[App\Http\Controllers\TransaksiController::class, 'store'])->name('transaksi.store');
+Route::post('transaksi/store',[App\Http\Controllers\TransaksiController::class, 'store'])->name('transaksi.store');
