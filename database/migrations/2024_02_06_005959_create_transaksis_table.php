@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('penerbangan_id')->constrained('penerbangans');
             $table->foreignId('user_id')->constrained('users');
+            $table->integer('qty')->unsigned()->nullable();
             $table->enum('status', ['paid','unpaid'])->nullable();
             $table->enum('adm_conf', ['Process', 'Confirmed'])->nullable();
             $table->string('total', 100)->nullable();

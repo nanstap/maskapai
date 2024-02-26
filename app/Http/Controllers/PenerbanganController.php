@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Penerbangan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class PenerbanganController extends Controller
 {
@@ -32,7 +34,33 @@ class PenerbanganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validasi input validator
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' => 'required',
+        ]);
+
+       
+        //store image
+        $imagePath = $request->file('image')->store('public/images');
+
+        //request all store
+        $penerbangan = Penerbangan::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'image' => $imagePath,
+            'description' => $request->description,
+        ]);
+
+        // dd($penerbangan);
+        if ($penerbangan) {
+            return redirect()->route('penerbangan.index')->with('success', 'Penerbangan created successfully');
+        } else{
+            return redirect()->route('penerbangan.index')->with('errors', 'Penerbangan created failed');
+        }
+
     }
 
     /**
@@ -46,24 +74,66 @@ class PenerbanganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Penerbangan $penerbangan)
+    public function edit($id)
     {
-        //
+        //mengambil data penerbangan per id
+        $penerbangan = Penerbangan::find($id);
+        //show data penerbangan per id
+        return view('penerbangan.edit', compact('penerbangan'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Penerbangan $penerbangan)
+    public function update(Request $request, $id)
     {
-        //
+        //validate
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+        ]);
+        // jika image tidak diubah
+        if (!$request->file('image')) {
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+        }
+        //cek jika ada file image
+        if ($request->file('image')) {
+            //store image
+            $imagePath = $request->file('image')->store('public/images');
+        } else {
+            $imagePath = $request->image;
+            // IMAGE TIDAK DI UBAH
+            
+        }
+        //delete image yang lama
+        if ($request->image) {
+            Storage::delete($request->image);
+        }
+        //update data penerbangan per id
+        $penerbangan = Penerbangan::find($id);
+        $penerbangan->name = $request->name;
+        $penerbangan->price = $request->price;
+        $penerbangan->image = $imagePath;
+        $penerbangan->description = $request->description;
+        
+        if ($penerbangan->save()) {
+            return redirect()->route('penerbangan.index')->with('success', 'Penerbangan updated successfully');
+        } else {
+            return redirect()->route('penerbangan.index')->with('errors', 'Penerbangan updated failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Penerbangan $penerbangan)
+    public function destroy($id)
     {
-        //
+        //mendelete data penerbangan per id
+        $penerbangan = Penerbangan::find($id);
+        $penerbangan->delete();
+        return redirect()->route('penerbangan.index')->with('success', 'Penerbangan deleted successfully');
     }
 }

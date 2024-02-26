@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
+use App\Models\Penerbangan;
 use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
@@ -12,7 +13,10 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        //
+        //passing data transaksi ke views
+        $penerbangan = Penerbangan::all(); //select * from penerbangan
+        $transaksi = Transaksi::all(); //select * from transaksi
+        return view('trxuser.index', compact('transaksi', 'penerbangan'));
     }
 
     /**
