@@ -27,9 +27,9 @@ class TransaksiController extends Controller
     {
         //
         //passing data transaksi ke views
-        $penerbangan = Penerbangan::all(); //select * from penerbangan
-        $transaksi = Transaksi::all(); //select * from transaksi
-        return view('trxuser.create', compact('transaksi', 'penerbangan'));
+        // $data['penerbangan'] = Penerbangan::all(); //select * from penerbangan
+        $data['transaksi'] = Transaksi::all(); //select * from transaksi
+        return view('trxuser.create', $data);
     }
 
     /**
@@ -67,7 +67,7 @@ class TransaksiController extends Controller
         $trx->total = $total;
         $trx->save(); 
         
-        $transaksi = Trasaksi::all();
+        $transaksi = Transaksi::all();
         // dd($trx);
         return view('trxuser.create',compact('transaksi', 'total'));
 
@@ -100,8 +100,11 @@ class TransaksiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Transaksi $transaksi)
+    public function destroy($id)
     {
-        //
+        //delete transaksi sesuai id
+        $transaksi = Transaksi::find($id);
+        $transaksi->delete();
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dihapus');
     }
 }

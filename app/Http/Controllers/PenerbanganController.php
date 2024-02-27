@@ -89,11 +89,7 @@ class PenerbanganController extends Controller
     public function update(Request $request, $id)
     {
         //validate
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-        ]);
+       
         // jika image tidak diubah
         if (!$request->file('image')) {
             $request->validate([
@@ -119,12 +115,14 @@ class PenerbanganController extends Controller
         $penerbangan->price = $request->price;
         $penerbangan->image = $imagePath;
         $penerbangan->description = $request->description;
+        $penerbangan->save();
+        dd($penerbangan);
         
-        if ($penerbangan->save()) {
-            return redirect()->route('penerbangan.index')->with('success', 'Penerbangan updated successfully');
-        } else {
-            return redirect()->route('penerbangan.index')->with('errors', 'Penerbangan updated failed');
-        }
+        // if ($penerbangan->save()) {
+        //     return redirect()->route('penerbangan.index')->with('success', 'Penerbangan updated successfully');
+        // } else {
+        //     return redirect()->route('penerbangan.index')->with('errors', 'Penerbangan updated failed');
+        // }
     }
 
     /**
