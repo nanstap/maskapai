@@ -69,6 +69,7 @@ class PenerbanganController extends Controller
     public function show(Penerbangan $penerbangan)
     {
         //
+        abort('404');
     }
 
     /**

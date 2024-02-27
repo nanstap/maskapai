@@ -34,6 +34,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('penerbangan.index') }}">Penerbangan</a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('transaksi.index')}}">Transaksi</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
