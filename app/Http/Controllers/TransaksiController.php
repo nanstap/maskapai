@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
 use App\Models\Penerbangan;
+use App\Models\Checkoout;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -86,6 +87,31 @@ class TransaksiController extends Controller
         //menampilkan data transaksi
         $transaksi = Transaksi::all(); //select * from transaksi where id = $id
         return view('trxuser.checkout', compact('transaksi'));
+    }
+
+    public function checkout_store(Request $request){
+             
+             //jika bayar kurang dari total
+         if($request->bayar < $request->total){
+            return redirect()->back()->with('errors', 'Pembayaran kurang');
+        }
+        // jika ada uang kembalian
+        if ($request->bayar > $request->subtotal){
+            $kembalian = $request->bayar - $request->subtotal;
+            return redirect()->route('transaksi.index')
+            ->with('success', 'Transaksi berhasil, kembalian : Rp. '.$kembalian);
+        }
+        //menyimpan data ke dalam tabel checkout
+        $checkout = Checkout::create([
+            'penerbangan_id' => $request->penerbangan_id,
+            'transaksi_id' => $request->transaksi_id,
+            'user_id' => Auth::user()->id,
+            'total' => $request->subtotal,
+        ]);
+        
+       
+         
+        
     }
 
     /**

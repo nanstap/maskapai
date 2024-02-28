@@ -9,7 +9,6 @@
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
-                
                 @endif
                 <div class="card">
                     <div class="card-header">
