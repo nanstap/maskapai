@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('checkouts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('penerbangan_id')->constrained('penerbangans');
-            $table->foreignId('transaksi_id')->constrained('transaksis');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('penerbangan_id');
+            $table->foreignId('transaksi_id');
+            $table->foreignId('user_id');
             $table->integer('total');
             $table->timestamps();
         });
