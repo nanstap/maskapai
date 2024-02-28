@@ -81,6 +81,13 @@ class TransaksiController extends Controller
         //
     }
 
+    public function checkout()
+    {   
+        //menampilkan data transaksi
+        $transaksi = Transaksi::all(); //select * from transaksi where id = $id
+        return view('trxuser.checkout', compact('transaksi'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

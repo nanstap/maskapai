@@ -12,7 +12,7 @@
                 @endif
                 <div class="card">
                     <div class="card-header">
-                        <h2>Pembayaran</h2>
+                        <h2>Checkout</h2>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -25,7 +25,9 @@
                                         <th>Total</th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+                                    
+                                </tbody>
                             </table>
                         </div>
                     </div>

@@ -101,7 +101,7 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="5" class="text-right">
-                                            <a href="" class="btn btn-outline-primary">Checkout</a>
+                                            <a href="{{route('transaksi.checkout')}}" class="btn btn-outline-primary">Checkout</a>
                                         </td>
                                     </tr>
                                 </tfoot>
