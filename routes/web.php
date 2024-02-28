@@ -47,3 +47,4 @@ Route::get('transaksi/create',
     [App\Http\Controllers\TransaksiController::class, 'create'])->name('transaksi.create');
 Route::post('transaksi/store',[App\Http\Controllers\TransaksiController::class, 'store'])->name('transaksi.store');
 Route::get('transaksi/destroy/{id}',[App\Http\Controllers\TransaksiController::class, 'destroy'])->name('transaksi.destroy');
+Route::get('checkout',[App\Http\Controllers\TransaksiController::class, 'checkout'])->name('transaksi.checkout');
