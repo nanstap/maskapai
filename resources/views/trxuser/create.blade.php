@@ -4,8 +4,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                {{-- show message error --}}
+                {{-- show message success --}}
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
+                
                 <div class="card">
                     <div class="card-header">
                         <h2>Transaksi</h2>
@@ -21,8 +27,11 @@
                                             <td>
                                                 <select name="penerbangan_id" class="form-control">
                                                     <option value="">Pilih Penerbangan</option>
-                                                    @foreach ($penerbangan as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                    @php
+                                                        $penerbangan = App\Models\Penerbangan::all();
+                                                    @endphp
+                                                    @foreach ($penerbangan as $i)
+                                                        <option value="{{ $i->id }}">{{ $i->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </td>
@@ -69,7 +78,8 @@
                                             <td>{{ $item->qty }}</td>
                                             <td>{{ $item->total }}</td>
                                             <td>
-                                                <a href="" class="btn btn-danger">Hapus</a>
+                                                    <a href="{{ route('transaksi.destroy', $item->id) }}"
+                                                        class="btn btn-danger">Hapus</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -91,7 +101,7 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="5" class="text-right">
-                                            <a href="#" class="btn btn-outline-primary">Checkout</a>
+                                            <a href="{{route('transaksi.checkout')}}" class="btn btn-outline-primary">Checkout</a>
                                         </td>
                                     </tr>
                                 </tfoot>
