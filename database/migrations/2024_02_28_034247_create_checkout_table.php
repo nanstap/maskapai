@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('penerbangan_id')->constrained('penerbangans');
             $table->foreignId('transaksi_id')->constrained('transaksis');
             $table->foreignId('user_id')->constrained('users');
-            $table->string('status')->nullable();
             $table->integer('total');
             $table->timestamps();
         });

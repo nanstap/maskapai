@@ -51,4 +51,8 @@ Route::post('transaksi/store',[App\Http\Controllers\TransaksiController::class, 
 Route::get('transaksi/destroy/{id}',[App\Http\Controllers\TransaksiController::class, 'destroy'])->name('transaksi.destroy');
 Route::get('checkout',
     [App\Http\Controllers\TransaksiController::class, 'checkout'])->name('transaksi.checkout');
+
+//checkout 
+Route::post('checkoutstore',
+    [App\Http\Controllers\TransaksiController::class, 'checkout_store'])->name('transaksi.checkout_store');
 });
