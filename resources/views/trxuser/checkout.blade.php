@@ -26,7 +26,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($transaksi as $i)
+                                        <tr>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $i->listTransaksi->name }}</td>
+                                            <td>{{ $i->qty }}</td>
+                                            <td>{{ $i->total }}</td>
+                                        </tr>
+                                    @endforeach
+                                    <tr>
+                                        <td colspan="3">Total</td>
+                                        <td class="col-md-3">{{ $transaksi->sum('total') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">Bayar</td>
+                                        <td><input type="text" name="bayar" class="form-control"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <form action="{{ route('transaksi.store') }}" method="post">
+                                                @csrf
+                                                @method('POST')
+                                                <button type="submit" class="btn btn-primary">Checkout</button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
