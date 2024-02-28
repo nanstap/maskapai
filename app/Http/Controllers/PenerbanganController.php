@@ -87,43 +87,44 @@ class PenerbanganController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    {
-        //validate
-       
-        // jika image tidak diubah
-        if (!$request->file('image')) {
-            $request->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
+{
+    // Validate request
+    $request->validate([
+        'name' => 'required',
+        'price' => 'required|numeric',
+        'description' => 'required',
+        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
+    // Find the Penerbangan
+    $penerbangan = Penerbangan::find($id);
+
+    // Check if there is a new image
+    if ($request->hasFile('image')) {
+        // Store new image
+        $imagePath = $request->file('image')->store('public/images');
+
+        // Delete old image if it exists
+        if ($penerbangan->image) {
+            Storage::delete($penerbangan->image);
         }
-        //cek jika ada file image
-        if ($request->file('image')) {
-            //store image
-            $imagePath = $request->file('image')->store('public/images');
-        } else {
-            $imagePath = $request->image;
-            // IMAGE TIDAK DI UBAH
-            
-        }
-        //delete image yang lama
-        if ($request->image) {
-            Storage::delete($request->image);
-        }
-        //update data penerbangan per id
-        $penerbangan = Penerbangan::find($id);
-        $penerbangan->name = $request->name;
-        $penerbangan->price = $request->price;
+
+        // Update image path
         $penerbangan->image = $imagePath;
-        $penerbangan->description = $request->description;
-        $penerbangan->save();
-        dd($penerbangan);
-        
-        // if ($penerbangan->save()) {
-        //     return redirect()->route('penerbangan.index')->with('success', 'Penerbangan updated successfully');
-        // } else {
-        //     return redirect()->route('penerbangan.index')->with('errors', 'Penerbangan updated failed');
-        // }
     }
+
+    // Update other fields
+    $penerbangan->name = $request->name;
+    $penerbangan->price = $request->price;
+    $penerbangan->description = $request->description;
+    
+    // Save the updated Penerbangan
+    $penerbangan->save();
+
+    // Redirect with success message
+    return redirect()->route('penerbangan.index')->with('success', 'Penerbangan updated successfully');
+}
+
 
     /**
      * Remove the specified resource from storage.
