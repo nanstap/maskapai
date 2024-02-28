@@ -19,9 +19,7 @@
                                 </tr>
                                 <tr>
                                     <td>Price</td>
-                                    <td>
-                                        
-                                        <input type="text" class="form-control" name="price"
+                                    <td><input type="text" class="form-control" name="price"
                                             value="{{ $penerbangan->price }}"></td>
                                 </tr>
                                 <tr>
@@ -29,18 +27,21 @@
                                     <td>
                                         {{-- show image --}}
                                         <img src="{{ Storage::url($penerbangan->image) }}" alt="" width="100px">
-                                        <input type="file" class="form-control" name="image"></td>
+                                        <input type="file" class="form-control" name="image">
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Desription</td>
-                                    <td><input type="text" class="form-control" name="description"></td>
+                                    <td>Description</td>
+                                    <td><input type="text" class="form-control" name="description"
+                                            value="{{ $penerbangan->description }}"></td>
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <td><button class="btn btn-outline-success">Save</button></td>
+                                    <td><button type="submit" class="btn btn-outline-success">Save</button></td>
                                 </tr>
                             </table>
                         </form>
+
                     </div>
                 </div>
             </div>
